@@ -73,7 +73,7 @@
         type="hidden"
       />
       <?php //echo $orderDate; ?>
-      <input type="hidden" class="date form-control" name="serach_date" value="" id="booking-date-id" placeholder="Date">
+      <input type="hidden" class="date form-control" name="serach_date" value="{{$orderDate}}" id="booking-date-id" placeholder="Date">
       <input
         class="form-control"
        name="user_id" value="{{Auth::id()}}"

@@ -36,7 +36,7 @@ class OrderRepository implements OrderInterface
 
     public function booking(Request $request)
     {
-        print_r($request->all());
+        //print_r($request->all());
         //die();
         $address=$request->address;
         $long=$request->long;
@@ -44,7 +44,7 @@ class OrderRepository implements OrderInterface
         $service=$request->service;
         $type=$request->type;
         $timeSlotPrint=$this->printTime();
-
+        $orderDate= date("yy-m-d");
 
         //print_r($timeSlotPrint);
         
@@ -66,20 +66,12 @@ class OrderRepository implements OrderInterface
                 }
 
                 $vendor_id=$order->vendor_id;
-                 
-                //user for data saving
-                 /*
-                 $typeInfor=Type::where('id', $order->type_id)->first();
-                 $travelTime=0;
-                 $expectedTime=($typeInfor->duration_hrs+$travelTime);
-                 $endTime=$this->expectEndTime($order->start_time,$expectedTime);
-                 */
                  //$this->getDisableTime();
             }
             
-            print_r($TempTimes);
+            //print_r($TempTimes);
             $disableTime=$this->getDisableTime($TempTimes);
-            print_r($disableTime);
+            //print_r($disableTime);
             
            
             //die();
@@ -101,6 +93,7 @@ class OrderRepository implements OrderInterface
             }else{
             $bookingInfor=false;   
             return view('booking.booking',compact(
+                "orderDate",
                 "address",
                 "long",
                 "lant",
@@ -119,12 +112,20 @@ class OrderRepository implements OrderInterface
         $type=$request->type;
         $userId=$request->user_id;
         $order_date=$request->serach_date;
+
         if(isset($request->vendor)){
             $strResult=explode("_",$request->vendor);
             $startTime=$strResult[0];
             $vendorId=$strResult[1];
         }
         
+        //user for data saving
+                 
+        $typeInfor=Type::where('id',$type)->first();
+        $travelTime=0; // TODO google map time duration
+        $expectedTime=($typeInfor->duration_hrs+$travelTime);
+        $endTime=$this->expectEndTime($startTime,$expectedTime);
+                 
         if($vendorId>0 && $userId>0){
 
             $order = new Order;
@@ -133,7 +134,7 @@ class OrderRepository implements OrderInterface
             $order->service_id = $service;
             $order->type_id = $type;
             $order->start_time = $startTime;
-            $order->end_time = $startTime;
+            $order->end_time = $endTime;
             $order->order_date = $order_date;
             $order->long = $long;
             $order->latitu = $lant;
