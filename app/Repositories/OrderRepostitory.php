@@ -25,7 +25,7 @@ class OrderRepository implements OrderInterface
 
     public function clientInformation(Request $request)
     {
-        print_r($request->all());
+        //print_r($request->all());
 
         $service=$request->service;
         $type=$request->type;
