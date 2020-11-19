@@ -25,6 +25,7 @@ use App\Http\Controllers\OrderController;
 
 Auth::routes();
 
+
 //Route::get('/test',[TestController::class, 'hello']);
 //Route::post('/services',[TestController::class,'services']);
 //Route::post('/booking',[TestController::class,'booking']);
