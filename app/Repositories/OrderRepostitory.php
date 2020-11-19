@@ -9,6 +9,7 @@ use App\Models\Service;
 use App\Models\Order;
 use App\Models\Type;
 use Carbon\Carbon;
+use Validator;
 
 class OrderRepository implements OrderInterface
 {
@@ -38,7 +39,20 @@ class OrderRepository implements OrderInterface
     {
         //print_r($request->all());
         //die();
-        $address=$request->address;
+        
+        /*
+        $validatedData = $request->validate([
+            'address' => 'required',
+        ]);
+        */
+
+        $inputAddress=$request->address;
+        if($inputAddress==''){
+           $inputAddress="sample address1";
+        }
+       
+
+        $address=$inputAddress;
         $long=$request->long;
         $lant=$request->lant;
         $service=$request->service;
@@ -57,12 +71,17 @@ class OrderRepository implements OrderInterface
 
             $TempTimes=[];
             $vendor_id=-1;
+            $calculateTravelTime=2; //TODO using google api set to 1 hour for testing
             foreach($orders as $order){
-                
+
+                $calculateTravelTime=$this->calculateTraveTime();
+                $endTime=$this->expectEndTime($order->end_time,$calculateTravelTime);
+
                 if($order->vendor_id==$vendor_id){
-                    $TempTimes[$order->vendor_id][]=array("start"=>$order->start_time,"end"=>$order->end_time);
+
+                    $TempTimes[$order->vendor_id][]=array("start"=>$order->start_time,"end"=>$endTime);
                 }else{
-                    $TempTimes[$order->vendor_id][]=array("start"=>$order->start_time,"end"=>$order->end_time);
+                    $TempTimes[$order->vendor_id][]=array("start"=>$order->start_time,"end"=>$endTime);
                 }
 
                 $vendor_id=$order->vendor_id;
@@ -145,6 +164,9 @@ class OrderRepository implements OrderInterface
         }
     }
 
+    private function calculateTraveTime(){
+        return 1;
+    }
     private function printTime(){
         $today = Carbon::createFromFormat('H:i:s','08:00:00');; // 2017-04-01 00:00:00
         $now = $today;

@@ -10,6 +10,15 @@ cd into your project
 composer install
 npm install
 cp .env.example .env
+
+Changed below setting in .env file
+DB_CONNECTION=mysql
+DB_HOST=localhost
+DB_PORT=3306
+DB_DATABASE="yours"
+DB_USERNAME="yours"
+DB_PASSWORD="yours"
+
 php artisan key:generate
 php artisan migrate
 php artisan db:seed

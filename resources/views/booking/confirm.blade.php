@@ -5,7 +5,7 @@
 <div class="container">
     <div class="jumbotron text-center">
     <h1 class="display-3">Thank You for Booking!</h1>
-    <a href="/" >Book again</a>
+    <a href="/home" >Book again</a>
     <hr>
     </div>
 </div>

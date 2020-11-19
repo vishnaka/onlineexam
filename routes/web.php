@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return view('welcome');
-    //return redirect('login');
+    //return view('welcome');
+    return redirect('login');
 });
 
 
@@ -33,10 +33,14 @@ Auth::routes();
 
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/home', [App\Http\Controllers\OrderController::class, 'index'])->name('home');
-//Route::get('/test',[OrderController::class,'test']);
-Route::post('/client',[OrderController::class,'clientInfor']);
-Route::post('/booking',[OrderController::class,'booking']);
-Route::post('/confirm',[OrderController::class,'confirmOrder']);
-Route::get('/complete',[OrderController::class,'completeOrder']);
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/home', [App\Http\Controllers\OrderController::class, 'index'])->name('home');
+    //Route::get('/test',[OrderController::class,'test']);
+    Route::post('/client',[OrderController::class,'clientInfor']);
+    Route::post('/booking',[OrderController::class,'booking']);
+    Route::post('/confirm',[OrderController::class,'confirmOrder']);
+    Route::get('/complete',[OrderController::class,'completeOrder']);
+
+});
 

@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+<div id="viewDiv"></div>
 <div class="container">
-<form action="/booking" method="post">
+<form action="/booking" method="POST">
 {{ csrf_field() }}
 <div class="form-group">
     <label for="formGroupExampleInput">Please Type address</label>
@@ -18,30 +19,31 @@
       -->
       <input
         class="form-control"
-        placeholder="Enter your address" name="address"
+         name="address"
         type="text"
       />
       <input
         class="form-control"
-        placeholder="longe" name="long"
-        type="text"
+        name="long" value="0"
+        type="hidden"
       />
       <input
         class="form-control"
-        placeholder="latitude" name="lant"
-        type="text"
+        name="lant" value="0"
+        type="hidden"
       />
       <input
         class="form-control"
-        placeholder="service" name="service" value="{{$service}}"
-        type="text"
+        name="service" value="{{$service}}"
+        type="hidden"
       />
       <input
         class="form-control"
-        placeholder="type" name="type" value="{{$type}}"
-        type="text"
+        name="type" value="{{$type}}"
+        type="hidden"
       />
   </div>
+  </br>
   <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Continue</button>
 </div> 
 </form>

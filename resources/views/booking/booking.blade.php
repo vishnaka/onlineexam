@@ -3,6 +3,15 @@
 @section('content')
 
 <div class="container">
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <div class="row">
   <div class="col-4">
     <form action="/booking" method="post">
@@ -88,7 +97,7 @@
 
     @foreach($timeSlotPrint as $key=>$timeslot)
     <div class="card-body">
-      <h5 class="card-title">{{ $timeslot}}</h5>
+      <h5 class="card-title">{{ $timeslot}} (Select radio button and book)</h5>
       @foreach($serviceVendors as $service)
                     @foreach($service->vendors as $ven)
                     <?php
@@ -103,7 +112,7 @@
                      $disableRadio=''; 
                      if(in_array($timeslot,$result)) {
                           $isDisable=true;
-                          $is_book='Reseved';
+                          $is_book='Reserved';
                           $disableRadio='disabled selected'; 
                      }else{
                         $isDisable=false;
