@@ -66,7 +66,8 @@ class OrderRepository implements OrderInterface
             $orderDate=$request->serach_date;
             $bookingInfor=true; 
             $disableTime=[];
-            $orders = Order::where('service_id', '=',$service)->where('order_date', '=',$orderDate)->orderBy('vendor_id', 'DESC')->get();
+            //$orders = Order::where('service_id', '=',$service)->where('order_date', '=',$orderDate)->orderBy('vendor_id', 'DESC')->get();
+            $orders = Order::where('order_date', '=',$orderDate)->orderBy('vendor_id', 'DESC')->get();
             //print_r($orders);
 
             $TempTimes=[];
